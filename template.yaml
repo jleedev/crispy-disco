@@ -5,8 +5,6 @@ Resources:
     Type: 'AWS::Serverless::Function'
     Properties:
       PackageType: Image
-      Architectures:
-        - arm64
       ImageUri: crispy-disco
       FunctionUrlConfig:
         AuthType: NONE
