@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  MartinFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      PackageType: Image
+      Architectures:
+        - arm64
+      ImageUri: crispy-disco
+      FunctionUrlConfig:
+        AuthType: NONE

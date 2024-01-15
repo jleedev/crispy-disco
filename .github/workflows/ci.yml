@@ -1,0 +1,22 @@
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+      - uses: aws-actions/configure-aws-credentials@v2
+        with:
+          # dummy values for sam local
+          aws-access-key-id: z
+          aws-secret-access-key: z
+          aws-region: us-east-2
+      - uses: docker/setup-buildx-action@v3
+        with:
+          install: true
+      - run: docker build ./server/ -t crispy-disco
+      - run: sam build
+      - run: sam local invoke
