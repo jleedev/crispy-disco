@@ -1,4 +1,6 @@
 FROM rust:alpine AS builder
+RUN apk add musl-dev
+
 WORKDIR /build
 COPY . .
 RUN cargo install --path .
