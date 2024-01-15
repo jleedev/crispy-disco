@@ -1,4 +1,4 @@
 FROM rust
 WORKDIR /build
 COPY . .
-RUN cargo install
+RUN cargo install --path .
