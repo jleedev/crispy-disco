@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 invoke() {
   sam local generate-event apigateway http-api-proxy \
