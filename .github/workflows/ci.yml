@@ -23,7 +23,9 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@v3
-      - run: sam local start-lambda --warm-containers EAGER &
+      - run: |
+          sam local start-lambda --warm-containers EAGER &
+          while sleep 1; do >/dev/tcp/localhost/3001 && break; done
       - run: |
           export AWS_ACCESS_KEY_ID=x
           export AWS_SECRET_ACCESS_KEY=x
