@@ -16,5 +16,6 @@ jobs:
           context: ./server/
           load: true
           tags: crispy-disco
+      - run: docker images -a --digests
       - run: sam build
       - run: ./test.sh
