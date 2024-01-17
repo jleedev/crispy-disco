@@ -5,6 +5,7 @@ Resources:
     Type: 'AWS::Serverless::Function'
     Properties:
       PackageType: Image
-      ImageUri: crispy-disco
-      FunctionUrlConfig:
-        AuthType: NONE
+      ImageUri: !Sub "${TAG}"
+Parameters:
+  TAG:
+    Type: String

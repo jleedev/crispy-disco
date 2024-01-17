@@ -33,9 +33,9 @@ jobs:
           docker load --input /tmp/myimage.tar
           docker image ls -a
       - uses: actions/checkout@v3
-      - run: sam build
+      - run: sam build -t .github/files/lambda.yaml
       - run: |
-          sam local start-lambda --warm-containers EAGER &
+          sam local start-lambda --parameter-overrides TAG=crispy-disco --warm-containers EAGER &
           while sleep 1; do >/dev/tcp/localhost/3001 && break; done
       - run: |
           export AWS_ACCESS_KEY_ID=x
