@@ -34,7 +34,7 @@ jobs:
           docker image ls -a
       - uses: actions/checkout@v3
       - run: sam build -t .github/files/lambda.yaml
-      - run:
+      - run: |
           sam local generate-event apigateway http-api-proxy \
           | jq '.rawPath="/"|.requestContext.http.method="GET"' \
           | sam local invoke --parameter-overrides TAG=crispy-disco -e - \
