@@ -34,12 +34,9 @@ jobs:
           docker image ls -a
       - uses: actions/checkout@v3
       - run: sam build -t .github/files/lambda.yaml
-      - run: |
-          sam local start-lambda --parameter-overrides TAG=crispy-disco --warm-containers EAGER &
-          while sleep 1; do >/dev/tcp/localhost/3001 && break; done
-      - run: |
-          export AWS_ACCESS_KEY_ID=x
-          export AWS_SECRET_ACCESS_KEY=x
-          export AWS_REGION=us-east-1
-          export AWS_ENDPOINT_URL=http://localhost:3001
-          ./test.sh
+      - run:
+          sam local generate-event apigateway http-api-proxy \
+          | jq '.rawPath="/"|.requestContext.http.method="GET"' \
+          | sam local invoke --parameter-overrides TAG=crispy-disco -e - \
+          | tee /dev/stderr \
+          | jq -e '.statusCode==200'
