@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 event=$(sam local generate-event apigateway http-api-proxy)
