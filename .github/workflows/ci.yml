@@ -4,7 +4,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: aws-actions/setup-sam@v2
         with:
           use-installer: true
@@ -13,7 +12,7 @@ jobs:
           install: true
       - uses: docker/build-push-action@v5
         with:
-          context: ./server/
+          context: '{{defaultContext}}:server'
           load: true
           tags: crispy-disco
       - run: sam build
@@ -22,6 +21,7 @@ jobs:
     needs:
       - build
     steps:
+      - uses: actions/checkout@v3
       - run: sam local start-lambda --warm-containers EAGER &
       - run: |
           export AWS_ACCESS_KEY_ID=x
