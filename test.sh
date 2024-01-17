@@ -1,10 +1,14 @@
 #!/bin/sh
 set -e
 
+event=$(sam local generate-event apigateway http-api-proxy)
+
 invoke() {
-  sam local generate-event apigateway http-api-proxy \
-    | jq "$1" \
-    | sam local invoke -e -
+  (aws lambda invoke \
+    --function-name MyFunction \
+    --payload $(echo "$event" | jq "$1") \
+    --cli-binary-format raw-in-base64-out \
+    >(cat >&2) >/dev/null) 2>&1
 }
 
 fail() {
