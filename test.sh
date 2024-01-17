@@ -6,7 +6,7 @@ event=$(sam local generate-event apigateway http-api-proxy)
 invoke() {
   (aws lambda invoke \
     --function-name MyFunction \
-    --payload $(echo "$event" | jq "$1") \
+    --payload "$(echo "$event" | jq "$1")" \
     --cli-binary-format raw-in-base64-out \
     >(cat >&2) >/dev/null) 2>&1
 }
