@@ -13,4 +13,4 @@ jobs:
           install: true
       - run: docker build ./server/ -t crispy-disco
       - run: sam build
-      - run: sam local invoke
+      - run: ./test.sh

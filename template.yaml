@@ -8,6 +8,3 @@ Resources:
       ImageUri: crispy-disco
       FunctionUrlConfig:
         AuthType: NONE
-    Metadata:
-      DockerContext: ./server/
-      Dockerfile: Dockerfile
