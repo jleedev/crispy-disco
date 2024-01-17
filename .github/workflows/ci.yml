@@ -13,7 +13,8 @@ jobs:
           install: true
       - uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:server"
-      - run: docker build ./server/ -t crispy-disco
+          context: ./server/
+          load: true
+          tags: crispy-disco
       - run: sam build
       - run: ./test.sh
