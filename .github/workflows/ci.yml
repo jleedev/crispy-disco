@@ -19,6 +19,8 @@ jobs:
       - run: sam build
   test:
     runs-on: ubuntu-latest
+    needs:
+      - build
     steps:
       - run: sam local start-lambda --warm-containers EAGER &
       - run: |
