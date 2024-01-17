@@ -14,15 +14,26 @@ jobs:
       - uses: docker/build-push-action@v5
         with:
           context: ./server/
-          load: true
           tags: crispy-disco
-      - run: sam build
+          outputs: type=docker,dest=/tmp/myimage.tar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: myimage
+          path: /tmp/myimage.tar
   test:
     runs-on: ubuntu-latest
     needs:
       - build
     steps:
+        uses: actions/download-artifact@v3
+        with:
+          name: myimage
+          path: /tmp
+      - run: |
+          docker load --input /tmp/myimage.tar
+          docker image ls -a
       - uses: actions/checkout@v3
+      - run: sam build
       - run: |
           sam local start-lambda --warm-containers EAGER &
           while sleep 1; do >/dev/tcp/localhost/3001 && break; done
